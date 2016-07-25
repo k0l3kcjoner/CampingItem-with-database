@@ -1,0 +1,80 @@
+<aura:component controller="CampingListController">
+    <aura:attribute name="newCamp" type="Camping_Item__c"  default="{ 'sobjectType': 'Camping_Item__c',
+                    'Name': '',
+                    'Quantity__c': 0,
+                    'Price__c': 0,
+                    'Packed__c': false
+                    }"/> 
+    <aura:attribute name="newItem" type="Camping_Item__c[]"/>
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+	<div class="slds-col slds-col--padded slds-p-top--large">
+    	<div aria-labbeledby="campinglist">
+        <fieldset class="slds-box slds-theme--default slds-container--small">
+            <legend id="campinglist" class="slds-text-heading--small slds-p-vertical--medium">
+            Add item
+            </legend>
+            <!-- tutaj dodajemy forme -->
+            <form class="slds-form--stacked">
+            <div class="slds-form-element slds-is-required">
+                <div class="slds-form-element__control">
+                <ui:inputText aura:id="campname" label="Name" 
+                              class="slds-input" 
+                              labelClass="slds-form-element__label" 
+                              value="{!v.newCamp.Name}"
+                              required="true" />
+                   
+                </div>
+                </div>
+                
+                <div class="slds-form-element slds-is-required">
+                	<div class="slds-form-element__control">
+                    	<ui:inputNumber aura:id="campquantity" label="Quantity"
+                                        class="slds-input"
+                                        labelClass="slds-form-element__label"
+                                        value="{!v.newCamp.Quantity__c}"
+                                        required="true" />
+                    </div>
+                </div>
+                
+                <div class="slds-form-element slds-is-required">
+                	<div class="slds-form-element__control">
+                    <ui:inputCurrency aura:id="campprice" label="Price"
+                                      class="slds-input"
+                                      labelClass="slds-form-element__label"
+                                      value="{!v.newCamp.Price__c}"
+                                      required="true" />
+                    </div>
+                </div>
+            	<div class="slds-form-element">
+                	<ui:inputCheckbox aura:id="camppacked" label="Packed?"
+                                      class="slds-checkbox"
+                                      labelClass="slds-form-element__label"
+                                      value="{!v.newCamp.Packed__c}" />
+                                                           
+                   
+                </div>
+                <div class="slds-form-element">
+                    <ui:button label="Input items"
+                               class="slds-button slds-button--brand"
+                               press="{!c.clickCreateCamp}" />
+                </div>
+            </form>
+            </fieldset>
+        </div>
+    </div>
+    <div class="slds-card slds-p-top--medium">
+    <header class="slds-card__header">
+        <h3 class="slds-text-heading--small">New Items</h3>
+        </header>
+        
+        <section class="slds-card__body">
+        <div id="list" class="row">
+            <aura:iteration items="{!v.newItem}" var="dupa"> <!-- items - nazwa frameworku,
+ {!v.newItem} - z czego pobiera dane, var - nazwa zmiennej wewnatrz elementu iteration,
+campingListItem dupa="{!dupa} - var i wskazanie na zmienna wewnatrz iteration -->
+                <c:campingListItem dupa="{!dupa}"/>
+            </aura:iteration>
+            </div>
+        </section>
+    </div>
+</aura:component>
